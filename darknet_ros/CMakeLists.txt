@@ -10,27 +10,7 @@ find_path(DARKNET_PATH
 message(STATUS "Darknet path dir = ${DARKNET_PATH}")
 add_definitions(-DDARKNET_FILE_PATH="${DARKNET_PATH}")
 
-# Find CUDA
-find_package(CUDA QUIET)
-if (CUDA_FOUND)
-  find_package(CUDA REQUIRED)
-  message(STATUS "CUDA Version: ${CUDA_VERSION_STRINGS}")
-  message(STATUS "CUDA Libararies: ${CUDA_LIBRARIES}")
-  set(
-    CUDA_NVCC_FLAGS
-    ${CUDA_NVCC_FLAGS};
-    -O3
-    -gencode arch=compute_30,code=sm_30
-    -gencode arch=compute_35,code=sm_35
-    -gencode arch=compute_50,code=[sm_50,compute_50]
-    -gencode arch=compute_52,code=[sm_52,compute_52]
-    -gencode arch=compute_61,code=sm_61
-    -gencode arch=compute_62,code=sm_62
-  )
-  add_definitions(-DGPU)
-else()
-  list(APPEND LIBRARIES "m")
-endif()
+list(APPEND LIBRARIES "m")
 
 # Find X11
 message ( STATUS "Searching for X11..." )
